@@ -1,0 +1,1171 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/filter.css">
+<link rel="stylesheet" href="css/nouislider.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="js/tailDT.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/wNumb.js"></script>
+        <script src="data/Lineas_GOTCPVUELTA_4.js"></script>
+        <script src="data/Lineas_GOTCPIDA_5.js"></script>
+        <script src="data/Lineas_EdictoVUELTA_6.js"></script>
+        <script src="data/Lineas_EdictoIDA_7.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-34.786271893423134,-58.65481748930269],[-34.47741176842314,-58.10905039045167]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_argenmaposcuro_0');
+        map.getPane('pane_argenmaposcuro_0').style.zIndex = 400;
+        var layer_argenmaposcuro_0 = L.tileLayer('https://wms.ign.gob.ar/geoserver/gwc/service/tms/1.0.0/argenmap_oscuro@EPSG:3857@png/{z}/{x}/{-y}.png', {
+            pane: 'pane_argenmaposcuro_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_argenmaposcuro_0;
+        map.createPane('pane_argenmapgris_1');
+        map.getPane('pane_argenmapgris_1').style.zIndex = 401;
+        var layer_argenmapgris_1 = L.tileLayer('https://wms.ign.gob.ar/geoserver/gwc/service/tms/1.0.0/mapabase_gris@EPSG:3857@png/{z}/{x}/{-y}.png', {
+            pane: 'pane_argenmapgris_1',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_argenmapgris_1;
+        map.createPane('pane_GoogleMaps_2');
+        map.getPane('pane_GoogleMaps_2').style.zIndex = 402;
+        var layer_GoogleMaps_2 = L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleMaps_2',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_GoogleMaps_2;
+        map.createPane('pane_OpenStreetMap_3');
+        map.getPane('pane_OpenStreetMap_3').style.zIndex = 403;
+        var layer_OpenStreetMap_3 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OpenStreetMap_3',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OpenStreetMap_3;
+        map.addLayer(layer_OpenStreetMap_3);
+        function pop_Lineas_GOTCPVUELTA_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">num_linea</th>\
+                        <td>' + (feature.properties['num_linea'] !== null ? autolinker.link(feature.properties['num_linea'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">sentido</th>\
+                        <td>' + (feature.properties['sentido'] !== null ? autolinker.link(feature.properties['sentido'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">recorrido</th>\
+                        <td>' + (feature.properties['recorrido'] !== null ? autolinker.link(feature.properties['recorrido'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">recorrido_sentido</th>\
+                        <td>' + (feature.properties['recorrido_sentido'] !== null ? autolinker.link(feature.properties['recorrido_sentido'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FILTRO_GOTCP</th>\
+                        <td>' + (feature.properties['FILTRO_GOTCP'] !== null ? autolinker.link(feature.properties['FILTRO_GOTCP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Lineas_GOTCPVUELTA_4_0() {
+            return {
+                pane: 'pane_Lineas_GOTCPVUELTA_4',
+                opacity: 1,
+                color: 'rgba(1,208,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Lineas_GOTCPVUELTA_4');
+        map.getPane('pane_Lineas_GOTCPVUELTA_4').style.zIndex = 404;
+        map.getPane('pane_Lineas_GOTCPVUELTA_4').style['mix-blend-mode'] = 'normal';
+        var layer_Lineas_GOTCPVUELTA_4 = new L.geoJson(json_Lineas_GOTCPVUELTA_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Lineas_GOTCPVUELTA_4',
+            layerName: 'layer_Lineas_GOTCPVUELTA_4',
+            pane: 'pane_Lineas_GOTCPVUELTA_4',
+            onEachFeature: pop_Lineas_GOTCPVUELTA_4,
+            style: style_Lineas_GOTCPVUELTA_4_0,
+        });
+        bounds_group.addLayer(layer_Lineas_GOTCPVUELTA_4);
+        map.addLayer(layer_Lineas_GOTCPVUELTA_4);
+        function pop_Lineas_GOTCPIDA_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">num_linea</th>\
+                        <td>' + (feature.properties['num_linea'] !== null ? autolinker.link(feature.properties['num_linea'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">sentido</th>\
+                        <td>' + (feature.properties['sentido'] !== null ? autolinker.link(feature.properties['sentido'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">recorrido</th>\
+                        <td>' + (feature.properties['recorrido'] !== null ? autolinker.link(feature.properties['recorrido'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">recorrido_sentido</th>\
+                        <td>' + (feature.properties['recorrido_sentido'] !== null ? autolinker.link(feature.properties['recorrido_sentido'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FILTRO_GOTCP</th>\
+                        <td>' + (feature.properties['FILTRO_GOTCP'] !== null ? autolinker.link(feature.properties['FILTRO_GOTCP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Lineas_GOTCPIDA_5_0() {
+            return {
+                pane: 'pane_Lineas_GOTCPIDA_5',
+                opacity: 1,
+                color: 'rgba(0,67,210,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Lineas_GOTCPIDA_5');
+        map.getPane('pane_Lineas_GOTCPIDA_5').style.zIndex = 405;
+        map.getPane('pane_Lineas_GOTCPIDA_5').style['mix-blend-mode'] = 'normal';
+        var layer_Lineas_GOTCPIDA_5 = new L.geoJson(json_Lineas_GOTCPIDA_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Lineas_GOTCPIDA_5',
+            layerName: 'layer_Lineas_GOTCPIDA_5',
+            pane: 'pane_Lineas_GOTCPIDA_5',
+            onEachFeature: pop_Lineas_GOTCPIDA_5,
+            style: style_Lineas_GOTCPIDA_5_0,
+        });
+        bounds_group.addLayer(layer_Lineas_GOTCPIDA_5);
+        map.addLayer(layer_Lineas_GOTCPIDA_5);
+        function pop_Lineas_EdictoVUELTA_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Linea</th>\
+                        <td>' + (feature.properties['Linea'] !== null ? autolinker.link(feature.properties['Linea'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">sentido</th>\
+                        <td>' + (feature.properties['sentido'] !== null ? autolinker.link(feature.properties['sentido'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">recorrido</th>\
+                        <td>' + (feature.properties['recorrido'] !== null ? autolinker.link(feature.properties['recorrido'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">recorrido_sentido</th>\
+                        <td>' + (feature.properties['recorrido_sentido'] !== null ? autolinker.link(feature.properties['recorrido_sentido'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FILTRO_EDICTO</th>\
+                        <td>' + (feature.properties['FILTRO_EDICTO'] !== null ? autolinker.link(feature.properties['FILTRO_EDICTO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">description</th>\
+                        <td>' + (feature.properties['description'] !== null ? autolinker.link(feature.properties['description'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Lineas_EdictoVUELTA_6_0() {
+            return {
+                pane: 'pane_Lineas_EdictoVUELTA_6',
+                opacity: 1,
+                color: 'rgba(255,81,1,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Lineas_EdictoVUELTA_6');
+        map.getPane('pane_Lineas_EdictoVUELTA_6').style.zIndex = 406;
+        map.getPane('pane_Lineas_EdictoVUELTA_6').style['mix-blend-mode'] = 'normal';
+        var layer_Lineas_EdictoVUELTA_6 = new L.geoJson(json_Lineas_EdictoVUELTA_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Lineas_EdictoVUELTA_6',
+            layerName: 'layer_Lineas_EdictoVUELTA_6',
+            pane: 'pane_Lineas_EdictoVUELTA_6',
+            onEachFeature: pop_Lineas_EdictoVUELTA_6,
+            style: style_Lineas_EdictoVUELTA_6_0,
+        });
+        bounds_group.addLayer(layer_Lineas_EdictoVUELTA_6);
+        map.addLayer(layer_Lineas_EdictoVUELTA_6);
+        function pop_Lineas_EdictoIDA_7(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Linea</th>\
+                        <td>' + (feature.properties['Linea'] !== null ? autolinker.link(feature.properties['Linea'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">sentido</th>\
+                        <td>' + (feature.properties['sentido'] !== null ? autolinker.link(feature.properties['sentido'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">recorrido</th>\
+                        <td>' + (feature.properties['recorrido'] !== null ? autolinker.link(feature.properties['recorrido'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">recorrido_sentido</th>\
+                        <td>' + (feature.properties['recorrido_sentido'] !== null ? autolinker.link(feature.properties['recorrido_sentido'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FILTRO_EDICTO</th>\
+                        <td>' + (feature.properties['FILTRO_EDICTO'] !== null ? autolinker.link(feature.properties['FILTRO_EDICTO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">description</th>\
+                        <td>' + (feature.properties['description'] !== null ? autolinker.link(feature.properties['description'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Lineas_EdictoIDA_7_0() {
+            return {
+                pane: 'pane_Lineas_EdictoIDA_7',
+                opacity: 1,
+                color: 'rgba(118,6,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Lineas_EdictoIDA_7');
+        map.getPane('pane_Lineas_EdictoIDA_7').style.zIndex = 407;
+        map.getPane('pane_Lineas_EdictoIDA_7').style['mix-blend-mode'] = 'normal';
+        var layer_Lineas_EdictoIDA_7 = new L.geoJson(json_Lineas_EdictoIDA_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Lineas_EdictoIDA_7',
+            layerName: 'layer_Lineas_EdictoIDA_7',
+            pane: 'pane_Lineas_EdictoIDA_7',
+            onEachFeature: pop_Lineas_EdictoIDA_7,
+            style: style_Lineas_EdictoIDA_7_0,
+        });
+        bounds_group.addLayer(layer_Lineas_EdictoIDA_7);
+        map.addLayer(layer_Lineas_EdictoIDA_7);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/Lineas_EdictoIDA_7.png" /> Lineas_Edicto IDA': layer_Lineas_EdictoIDA_7,'<img src="legend/Lineas_EdictoVUELTA_6.png" /> Lineas_Edicto VUELTA': layer_Lineas_EdictoVUELTA_6,'<img src="legend/Lineas_GOTCPIDA_5.png" /> Lineas_GOTCP IDA': layer_Lineas_GOTCPIDA_5,'<img src="legend/Lineas_GOTCPVUELTA_4.png" /> Lineas_GOTCP VUELTA': layer_Lineas_GOTCPVUELTA_4,"OpenStreetMap": layer_OpenStreetMap_3,"Google Maps": layer_GoogleMaps_2,"argenmap gris": layer_argenmapgris_1,"argenmap oscuro": layer_argenmaposcuro_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        var mapDiv = document.getElementById('map');
+        var row = document.createElement('div');
+        row.className="row";
+        row.id="all";
+        row.style.height = "100%";
+        var col1 = document.createElement('div');
+        col1.className="col9";
+        col1.id = "mapWindow";
+        col1.style.height = "99%";
+        col1.style.width = "80%";
+        col1.style.display = "inline-block";
+        var col2 = document.createElement('div');
+        col2.className="col3";
+        col2.id = "menu";
+        col2.style.display = "inline-block";
+        mapDiv.parentNode.insertBefore(row, mapDiv);
+        document.getElementById("all").appendChild(col1);
+        document.getElementById("all").appendChild(col2);
+        col1.appendChild(mapDiv)
+        var Filters = {"FILTRO_EDICTO": "str","FILTRO_GOTCP": "str"};
+        function filterFunc() {
+          map.eachLayer(function(lyr){
+          if ("options" in lyr && "dataVar" in lyr["options"]){
+            features = this[lyr["options"]["dataVar"]].features.slice(0);
+            try{
+              for (key in Filters){
+                keyS = key.replace(/[^a-zA-Z0-9_]/g, "")
+                if (Filters[key] == "str" || Filters[key] == "bool"){
+                  var selection = [];
+                  var options = document.getElementById("sel_" + keyS).options
+                  for (var i=0; i < options.length; i++) {
+                    if (options[i].selected) selection.push(options[i].value);
+                  }
+                    try{
+                      if (key in features[0].properties){
+                        for (i = features.length - 1;
+                          i >= 0; --i){
+                          if (selection.indexOf(
+                          features[i].properties[key])<0
+                          && selection.length>0) {
+                          features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                  }
+                }
+                if (Filters[key] == "int"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (parseInt(features[i].properties[key])
+                          < sliderVals[0]
+                          || parseInt(features[i].properties[key])
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "real"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (features[i].properties[key]
+                          < sliderVals[0]
+                          || features[i].properties[key]
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "date"
+                  || Filters[key] == "datetime"
+                  || Filters[key] == "time"){
+                  try{
+                    if (key in features[0].properties){
+                      HTMLkey = key.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '');
+                      startdate = document.getElementById("dat_" +
+                        HTMLkey + "_date1").value.replace(" ", "T");
+                      enddate = document.getElementById("dat_" +
+                        HTMLkey + "_date2").value.replace(" ", "T");
+                      for (i = features.length - 1; i >= 0; --i){
+                        if (features[i].properties[key] < startdate
+                          || features[i].properties[key] > enddate){
+                          features.splice(i,1);
+                        }
+                      }
+                    }
+                  } catch(err){
+                  }
+                }
+              }
+            } catch(err){
+            }
+          this[lyr["options"]["layerName"]].clearLayers();
+          this[lyr["options"]["layerName"]].addData(features);
+          }
+          })
+        }
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_FILTRO_EDICTO = document.createElement('div');
+            div_FILTRO_EDICTO.id = "div_FILTRO_EDICTO";
+            div_FILTRO_EDICTO.className= "filterselect";
+            document.getElementById("menu").appendChild(div_FILTRO_EDICTO);
+            sel_FILTRO_EDICTO = document.createElement('select');
+            sel_FILTRO_EDICTO.multiple = true;
+            sel_FILTRO_EDICTO.size = 10;
+            sel_FILTRO_EDICTO.id = "sel_FILTRO_EDICTO";
+            var FILTRO_EDICTO_options_str = "<option value='' unselected></option>";
+            sel_FILTRO_EDICTO.onchange = function(){filterFunc()};
+            FILTRO_EDICTO_options_str  += '<option value="Linea 1 edicto - Recorrido A">Linea 1 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 10 edicto - Recorrido A">Linea 10 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 100 edicto - Recorrido A">Linea 100 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 100 edicto - Recorrido B">Linea 100 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 100 edicto - Recorrido C">Linea 100 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 101 edicto - Recorrido A">Linea 101 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 101 edicto - Recorrido B">Linea 101 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 102 edicto - Recorrido A">Linea 102 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 103 edicto - Recorrido A">Linea 103 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 103 edicto - Recorrido B">Linea 103 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 103 edicto - Recorrido C">Linea 103 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 105 edicto - Recorrido A">Linea 105 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 105 edicto - Recorrido B">Linea 105 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 107 edicto - Recorrido A">Linea 107 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 107 edicto - Recorrido B">Linea 107 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 108 edicto - Recorrido A">Linea 108 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 109 edicto - Recorrido A">Linea 109 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 109 edicto - Recorrido B (ex C)">Linea 109 edicto - Recorrido B (ex C)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 110 edicto - Recorrido A">Linea 110 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 110 edicto - Recorrido B">Linea 110 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 113 edicto - Recorrido A">Linea 113 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 113 edicto - Recorrido B">Linea 113 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 115 edicto - Recorrido A">Linea 115 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 117 edicto - Recorrido A">Linea 117 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 117 edicto - Recorrido B">Linea 117 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 117 edicto - Recorrido C">Linea 117 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 118 edicto - Recorrido A">Linea 118 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 118 edicto - Recorrido B">Linea 118 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 119 edicto - Recorrido A">Linea 119 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 123 edicto - Recorrido A">Linea 123 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 124 edicto - Recorrido A">Linea 124 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 126 edicto - Recorrido A">Linea 126 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 126 edicto - Recorrido B">Linea 126 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 126 edicto - Recorrido C (EX E)">Linea 126 edicto - Recorrido C (EX E)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 126 edicto - Recorrido D (EX F)">Linea 126 edicto - Recorrido D (EX F)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 128 edicto - Recorrido A">Linea 128 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 130 edicto - Recorrido A">Linea 130 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 130 edicto - Recorrido B">Linea 130 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 130 edicto - Recorrido B  ">Linea 130 edicto - Recorrido B  </option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 132 edicto - Recorrido A">Linea 132 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 132 edicto - Recorrido B">Linea 132 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 132 edicto - Recorrido C">Linea 132 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 133 edicto - Recorrido A (ex B)">Linea 133 edicto - Recorrido A (ex B)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 133 edicto - Recorrido B (ex D)">Linea 133 edicto - Recorrido B (ex D)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 134 edicto - Recorrido A">Linea 134 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 135 edicto - Recorrido A">Linea 135 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 140 edicto - Recorrido A">Linea 140 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 146 edicto - Recorrido A">Linea 146 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 148 edicto - Recorrido A">Linea 148 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 148 edicto - Recorrido B">Linea 148 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 148 edicto - Recorrido C">Linea 148 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 148 edicto - Recorrido D">Linea 148 edicto - Recorrido D</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 148 edicto - Recorrido E">Linea 148 edicto - Recorrido E</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 148 edicto - Recorrido F">Linea 148 edicto - Recorrido F</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 148 edicto - Recorrido G">Linea 148 edicto - Recorrido G</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 148 edicto - Recorrido H">Linea 148 edicto - Recorrido H</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 148 edicto - Recorrido I">Linea 148 edicto - Recorrido I</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 148 edicto - Recorrido J">Linea 148 edicto - Recorrido J</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 15 edicto - Recorrido A">Linea 15 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 15 edicto - Recorrido B (ex C)">Linea 15 edicto - Recorrido B (ex C)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 15 edicto - Recorrido C (ex D)">Linea 15 edicto - Recorrido C (ex D)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 15 edicto - Recorrido D (ex E)">Linea 15 edicto - Recorrido D (ex E)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 15 edicto - Recorrido E (ex F)">Linea 15 edicto - Recorrido E (ex F)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 15 edicto - Recorrido E  (ex F)">Linea 15 edicto - Recorrido E  (ex F)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 15 edicto - Recorrido F (ex G)">Linea 15 edicto - Recorrido F (ex G)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 15 edicto - Recorrido G (ex H)">Linea 15 edicto - Recorrido G (ex H)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 15 edicto - Recorrido H (ex J)">Linea 15 edicto - Recorrido H (ex J)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 15 edicto - Recorrido I (ex K)">Linea 15 edicto - Recorrido I (ex K)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 15 edicto - Recorrido J (ex L)">Linea 15 edicto - Recorrido J (ex L)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 150 edicto - Recorrido A">Linea 150 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 150 edicto - Recorrido B">Linea 150 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 153 edicto - Recorrido A">Linea 153 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 154 edicto - Recorrido A">Linea 154 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 158 edicto - Recorrido A">Linea 158 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 159 edicto - Recorrido A">Linea 159 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 159 edicto - Recorrido B">Linea 159 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 159 edicto - Recorrido C">Linea 159 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 159 edicto - Recorrido D">Linea 159 edicto - Recorrido D</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 159 edicto - Recorrido E">Linea 159 edicto - Recorrido E</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 159 edicto - Recorrido F">Linea 159 edicto - Recorrido F</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 159 edicto - Recorrido G">Linea 159 edicto - Recorrido G</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 159 edicto - Recorrido H">Linea 159 edicto - Recorrido H</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 159 edicto - Recorrido I (EX RECORRIDO H)">Linea 159 edicto - Recorrido I (EX RECORRIDO H)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 159 edicto - Recorrido I  (EX RECORRIDO H)">Linea 159 edicto - Recorrido I  (EX RECORRIDO H)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 159 edicto - Recorrido J  (EX RECORRIDO I)">Linea 159 edicto - Recorrido J  (EX RECORRIDO I)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 159 edicto - Recorrido K  (EX RECORRIDO J)">Linea 159 edicto - Recorrido K  (EX RECORRIDO J)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 159 edicto - Recorrido L  (EX RECORRIDO K)">Linea 159 edicto - Recorrido L  (EX RECORRIDO K)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 159 edicto - Recorrido M">Linea 159 edicto - Recorrido M</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 160 edicto - Recorrido A">Linea 160 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 160 edicto - Recorrido B">Linea 160 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 160 edicto - Recorrido C">Linea 160 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 160 edicto - Recorrido D">Linea 160 edicto - Recorrido D</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 160 edicto - Recorrido E">Linea 160 edicto - Recorrido E</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 160 edicto - Recorrido F">Linea 160 edicto - Recorrido F</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 160 edicto - Recorrido G (ex H)">Linea 160 edicto - Recorrido G (ex H)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 160 edicto - Recorrido H (ex I)">Linea 160 edicto - Recorrido H (ex I)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 160 edicto - Recorrido I (ex K)">Linea 160 edicto - Recorrido I (ex K)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 160 edicto - Recorrido J (ex L)">Linea 160 edicto - Recorrido J (ex L)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 160 edicto - Recorrido K (ex M)">Linea 160 edicto - Recorrido K (ex M)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 160 edicto - Recorrido L (ex N)">Linea 160 edicto - Recorrido L (ex N)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 161 edicto - Recorrido A">Linea 161 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 161 edicto - Recorrido B">Linea 161 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 163 edicto - Recorrido A">Linea 163 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 163 edicto - Recorrido B">Linea 163 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 163 edicto - Recorrido C">Linea 163 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 163 edicto - Recorrido C  ">Linea 163 edicto - Recorrido C  </option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 164 edicto - Recorrido A">Linea 164 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 164 edicto - Recorrido B">Linea 164 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 164 edicto - Recorrido C">Linea 164 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 164 edicto - Recorrido D">Linea 164 edicto - Recorrido D</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 168 edicto - Recorrido A">Linea 168 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 168 edicto - Recorrido B">Linea 168 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 168 edicto - Recorrido C">Linea 168 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 172 edicto - Recorrido A">Linea 172 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 172 edicto - Recorrido B">Linea 172 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 174 edicto - Recorrido A">Linea 174 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 174 edicto - Recorrido B">Linea 174 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 174 edicto - Recorrido C">Linea 174 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 176 edicto - Recorrido A">Linea 176 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 176 edicto - Recorrido B">Linea 176 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 176 edicto - Recorrido C">Linea 176 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 176 edicto - Recorrido D">Linea 176 edicto - Recorrido D</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 176 edicto - Recorrido E">Linea 176 edicto - Recorrido E</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 176 edicto - Recorrido F">Linea 176 edicto - Recorrido F</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 176 edicto - Recorrido G">Linea 176 edicto - Recorrido G</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 176 edicto - Recorrido H">Linea 176 edicto - Recorrido H</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 176 edicto - Recorrido I">Linea 176 edicto - Recorrido I</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 176 edicto - Recorrido J">Linea 176 edicto - Recorrido J</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 176 edicto - Recorrido K">Linea 176 edicto - Recorrido K</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 176 edicto - Recorrido L">Linea 176 edicto - Recorrido L</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 176 edicto - Recorrido M">Linea 176 edicto - Recorrido M</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 176 edicto - Recorrido N">Linea 176 edicto - Recorrido N</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 176 edicto - Recorrido NN">Linea 176 edicto - Recorrido NN</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 178 edicto - Recorrido A">Linea 178 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 178 edicto - Recorrido B">Linea 178 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 178 edicto - Recorrido C (ex D)">Linea 178 edicto - Recorrido C (ex D)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 178 edicto - Recorrido D (ex E)">Linea 178 edicto - Recorrido D (ex E)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 179 edicto - Recorrido A">Linea 179 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 179 edicto - Recorrido B">Linea 179 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 179 edicto - Recorrido C">Linea 179 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 180 edicto - Recorrido A">Linea 180 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 180 edicto - Recorrido B">Linea 180 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 180 edicto - Recorrido C">Linea 180 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 180 edicto - Recorrido D">Linea 180 edicto - Recorrido D</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 180 edicto - Recorrido E">Linea 180 edicto - Recorrido E</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 180 edicto - Recorrido F">Linea 180 edicto - Recorrido F</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 180 edicto - Recorrido G ">Linea 180 edicto - Recorrido G </option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 180 edicto - Recorrido H">Linea 180 edicto - Recorrido H</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 180 edicto - Recorrido I">Linea 180 edicto - Recorrido I</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 181 edicto - Recorrido A">Linea 181 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 181 edicto - Recorrido B">Linea 181 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 182 edicto - Recorrido A">Linea 182 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 182 edicto - Recorrido B">Linea 182 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 182 edicto - Recorrido C">Linea 182 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 182 edicto - Recorrido D">Linea 182 edicto - Recorrido D</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 184 edicto - Recorrido A">Linea 184 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 185 edicto - Recorrido A">Linea 185 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 185 edicto - Recorrido B">Linea 185 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 185 edicto - Recorrido C">Linea 185 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 188 edicto - Recorrido A ( ex B)">Linea 188 edicto - Recorrido A ( ex B)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 188 edicto - Recorrido A (ex B)">Linea 188 edicto - Recorrido A (ex B)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 188 edicto - Recorrido B (ex C)">Linea 188 edicto - Recorrido B (ex C)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 188 edicto - Recorrido C (ex D)">Linea 188 edicto - Recorrido C (ex D)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 188 edicto - Recorrido D ( ex G)">Linea 188 edicto - Recorrido D ( ex G)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 188 edicto - Recorrido D (ex G)">Linea 188 edicto - Recorrido D (ex G)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 188 edicto - Recorrido E ( ex H)">Linea 188 edicto - Recorrido E ( ex H)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 19 edicto - Recorrido A">Linea 19 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 2 edicto - Recorrido A">Linea 2 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 2 edicto - Recorrido B">Linea 2 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 20 edicto - Recorrido A">Linea 20 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 20 edicto - Recorrido B">Linea 20 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 21 edicto - Recorrido A">Linea 21 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 21 edicto - Recorrido B">Linea 21 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 21 edicto - Recorrido C">Linea 21 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 21 edicto - Recorrido D">Linea 21 edicto - Recorrido D</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 21 edicto - Recorrido E">Linea 21 edicto - Recorrido E</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 21 edicto - Recorrido F">Linea 21 edicto - Recorrido F</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 21 edicto - Recorrido G">Linea 21 edicto - Recorrido G</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 21 edicto - Recorrido H">Linea 21 edicto - Recorrido H</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 21 edicto - Recorrido I">Linea 21 edicto - Recorrido I</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 21 edicto - Recorrido J">Linea 21 edicto - Recorrido J</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 21 edicto - Recorrido K">Linea 21 edicto - Recorrido K</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 22 edicto - Recorrido A">Linea 22 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 22 edicto - Recorrido B">Linea 22 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 23 edicto - Recorrido A">Linea 23 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 24 edicto - Recorrido A">Linea 24 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 24 edicto - Recorrido B">Linea 24 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 24 edicto - Recorrido C">Linea 24 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 25 edicto - Recorrido A">Linea 25 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 28 edicto - Recorrido A">Linea 28 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 28 edicto - Recorrido B">Linea 28 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 28 edicto - Recorrido C">Linea 28 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 28 edicto - Recorrido D">Linea 28 edicto - Recorrido D</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 28 edicto - Recorrido E">Linea 28 edicto - Recorrido E</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 28 edicto - Recorrido F">Linea 28 edicto - Recorrido F</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 28 edicto - Recorrido G">Linea 28 edicto - Recorrido G</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 28 edicto - Recorrido H">Linea 28 edicto - Recorrido H</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 28 edicto - Recorrido I">Linea 28 edicto - Recorrido I</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 28 edicto - Recorrido J">Linea 28 edicto - Recorrido J</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 28 edicto - Recorrido K">Linea 28 edicto - Recorrido K</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 28 edicto - Recorrido L">Linea 28 edicto - Recorrido L</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 29 edicto - Recorrido A">Linea 29 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 29 edicto - Recorrido B">Linea 29 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 29 edicto - Recorrido C">Linea 29 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 31 edicto - Recorrido A">Linea 31 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 31 edicto - Recorrido B">Linea 31 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 31 edicto - Recorrido C (ex E)">Linea 31 edicto - Recorrido C (ex E)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 32 edicto - Recorrido A">Linea 32 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 33 edicto - Recorrido A">Linea 33 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 33 edicto - Recorrido B">Linea 33 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 33 edicto - Recorrido C">Linea 33 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 33 edicto - Recorrido D">Linea 33 edicto - Recorrido D</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 33 edicto - Recorrido E">Linea 33 edicto - Recorrido E</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 33 edicto - Recorrido F">Linea 33 edicto - Recorrido F</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 33 edicto - Recorrido G">Linea 33 edicto - Recorrido G</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 33 edicto - Recorrido H">Linea 33 edicto - Recorrido H</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 33 edicto - Recorrido I">Linea 33 edicto - Recorrido I</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 37 edicto - Recorrido A">Linea 37 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 37 edicto - Recorrido B">Linea 37 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 37 edicto - Recorrido C">Linea 37 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 39 edicto - Recorrido A">Linea 39 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 39 edicto - Recorrido B">Linea 39 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 39 edicto - Recorrido C">Linea 39 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 39 edicto - Recorrido D">Linea 39 edicto - Recorrido D</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 39 edicto - Recorrido E">Linea 39 edicto - Recorrido E</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 39 edicto - Recorrido F">Linea 39 edicto - Recorrido F</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 4 edicto - Recorrido A">Linea 4 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 4 edicto - Recorrido B">Linea 4 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 41 edicto - Recorrido A">Linea 41 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 42 edicto - Recorrido A">Linea 42 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 42 edicto - Recorrido B">Linea 42 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 44 edicto - Recorrido A">Linea 44 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 45 edicto - Recorrido A">Linea 45 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 45 edicto - Recorrido B">Linea 45 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 45 edicto - Recorrido C">Linea 45 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 46 edicto - Recorrido A">Linea 46 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 46 edicto - Recorrido B">Linea 46 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 46 edicto - Recorrido C">Linea 46 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 47 edicto - Recorrido A">Linea 47 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 47 edicto - Recorrido B">Linea 47 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 49 edicto - Recorrido A (ex B)">Linea 49 edicto - Recorrido A (ex B)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 5 edicto - Recorrido A">Linea 5 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 50 edicto - Recorrido A">Linea 50 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 50 edicto - Recorrido B">Linea 50 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 53 edicto - Recorrido A">Linea 53 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 53 edicto - Recorrido B">Linea 53 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 55 edicto - Recorrido A">Linea 55 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 55 edicto - Recorrido B">Linea 55 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 55 edicto - Recorrido C">Linea 55 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 56 edicto - Recorrido A (ex C)">Linea 56 edicto - Recorrido A (ex C)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 59 edicto - Recorrido A">Linea 59 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 59 edicto - Recorrido B">Linea 59 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 59 edicto - Recorrido C">Linea 59 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 59 edicto - Recorrido D">Linea 59 edicto - Recorrido D</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 6 edicto - Recorrido A (ex B)">Linea 6 edicto - Recorrido A (ex B)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 6 edicto - Recorrido B (ex D)">Linea 6 edicto - Recorrido B (ex D)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 63 edicto - Recorrido A">Linea 63 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 63 edicto - Recorrido B">Linea 63 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 64 edicto - Recorrido A">Linea 64 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 64 edicto - Recorrido B">Linea 64 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 65 edicto - Recorrido A">Linea 65 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 65 edicto - Recorrido B">Linea 65 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 67 edicto - Recorrido A">Linea 67 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 7 edicto - Recorrido A">Linea 7 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 7 edicto - Recorrido B">Linea 7 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 70 edicto - Recorrido A">Linea 70 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 70 edicto - Recorrido B">Linea 70 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 71 edicto - Recorrido A">Linea 71 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 71 edicto - Recorrido B">Linea 71 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 71 edicto - Recorrido C">Linea 71 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 75 edicto - Recorrido A">Linea 75 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 75 edicto - Recorrido A">Linea 75 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 75 edicto - Recorrido B">Linea 75 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 76 edicto - Recorrido A">Linea 76 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 76 edicto - Recorrido B">Linea 76 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 8 edicto - Recorrido A">Linea 8 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 8 edicto - Recorrido B">Linea 8 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 8 edicto - Recorrido C">Linea 8 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 8 edicto - Recorrido D">Linea 8 edicto - Recorrido D</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 8 edicto - Recorrido D MBUS">Linea 8 edicto - Recorrido D MBUS</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 8 edicto - Recorrido E">Linea 8 edicto - Recorrido E</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 80 edicto - Recorrido A">Linea 80 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 80 edicto - Recorrido B">Linea 80 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 80 edicto - Recorrido C">Linea 80 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 80 edicto - Recorrido D">Linea 80 edicto - Recorrido D</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 80 edicto - Recorrido E">Linea 80 edicto - Recorrido E</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 84 edicto - Recorrido A">Linea 84 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 85 edicto - Recorrido A">Linea 85 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 85 edicto - Recorrido B">Linea 85 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 85 edicto - Recorrido C">Linea 85 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 85 edicto - Recorrido D">Linea 85 edicto - Recorrido D</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 9 edicto - Recorrido A">Linea 9 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 9 edicto - Recorrido B">Linea 9 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 9 edicto - Recorrido C">Linea 9 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 90 edicto - Recorrido A">Linea 90 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 90 edicto - Recorrido B">Linea 90 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 91 edicto - Recorrido A">Linea 91 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 91 edicto - Recorrido B">Linea 91 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 91 edicto - Recorrido C (ex F)">Linea 91 edicto - Recorrido C (ex F)</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 91 edicto - Recorrido A">Linea 91 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 92 edicto - Recorrido A">Linea 92 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 92 edicto - Recorrido B">Linea 92 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 92 edicto - Recorrido C">Linea 92 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 92 edicto - Recorrido D">Linea 92 edicto - Recorrido D</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 93 edicto - Recorrido A">Linea 93 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 93 edicto - Recorrido B">Linea 93 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 93 edicto - Recorrido C">Linea 93 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 97 edicto - Recorrido A">Linea 97 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 98 edicto - Recorrido A">Linea 98 edicto - Recorrido A</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 98 edicto - Recorrido B">Linea 98 edicto - Recorrido B</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 98 edicto - Recorrido C">Linea 98 edicto - Recorrido C</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 98 edicto - Recorrido D">Linea 98 edicto - Recorrido D</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 98 edicto - Recorrido E">Linea 98 edicto - Recorrido E</option>';
+            FILTRO_EDICTO_options_str  += '<option value="Linea 98 edicto - Recorrido F">Linea 98 edicto - Recorrido F</option>';
+            sel_FILTRO_EDICTO.innerHTML = FILTRO_EDICTO_options_str;
+            div_FILTRO_EDICTO.appendChild(sel_FILTRO_EDICTO);
+            var lab_FILTRO_EDICTO = document.createElement('div');
+            lab_FILTRO_EDICTO.innerHTML = 'FILTRO_EDICTO';
+            lab_FILTRO_EDICTO.className = 'filterlabel';
+            div_FILTRO_EDICTO.appendChild(lab_FILTRO_EDICTO);
+            var reset_FILTRO_EDICTO = document.createElement('div');
+            reset_FILTRO_EDICTO.innerHTML = 'clear filter';
+            reset_FILTRO_EDICTO.className = 'filterlabel';
+            reset_FILTRO_EDICTO.onclick = function() {
+                var options = document.getElementById("sel_FILTRO_EDICTO").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_FILTRO_EDICTO.appendChild(reset_FILTRO_EDICTO);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_FILTRO_GOTCP = document.createElement('div');
+            div_FILTRO_GOTCP.id = "div_FILTRO_GOTCP";
+            div_FILTRO_GOTCP.className= "filterselect";
+            document.getElementById("menu").appendChild(div_FILTRO_GOTCP);
+            sel_FILTRO_GOTCP = document.createElement('select');
+            sel_FILTRO_GOTCP.multiple = true;
+            sel_FILTRO_GOTCP.size = 10;
+            sel_FILTRO_GOTCP.id = "sel_FILTRO_GOTCP";
+            var FILTRO_GOTCP_options_str = "<option value='' unselected></option>";
+            sel_FILTRO_GOTCP.onchange = function(){filterFunc()};
+            FILTRO_GOTCP_options_str  += '<option value="Linea 1 GOTCP - Recorrido A">Linea 1 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 10 GOTCP - Recorrido A">Linea 10 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 100 GOTCP - Recorrido A">Linea 100 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 100 GOTCP - Recorrido B">Linea 100 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 100 GOTCP - Recorrido C">Linea 100 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 101 GOTCP - Recorrido A">Linea 101 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 101 GOTCP - Recorrido B">Linea 101 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 101 GOTCP - Recorrido C">Linea 101 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 102 GOTCP - Recorrido A">Linea 102 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 103 GOTCP - Recorrido A">Linea 103 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 103 GOTCP - Recorrido B">Linea 103 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 103 GOTCP - Recorrido C">Linea 103 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 103 GOTCP - Recorrido D">Linea 103 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 105 GOTCP - Recorrido A">Linea 105 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 105 GOTCP - Recorrido B">Linea 105 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 107 GOTCP - Recorrido A">Linea 107 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 107 GOTCP - Recorrido B">Linea 107 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 108 GOTCP - Recorrido A">Linea 108 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 109 GOTCP - Recorrido A">Linea 109 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 109 GOTCP - Recorrido B">Linea 109 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 109 GOTCP - Recorrido C">Linea 109 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 110 GOTCP - Recorrido A">Linea 110 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 110 GOTCP - Recorrido B">Linea 110 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 113 GOTCP - Recorrido A">Linea 113 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 113 GOTCP - Recorrido B">Linea 113 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 115 GOTCP - Recorrido A">Linea 115 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 115 GOTCP - Recorrido B">Linea 115 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 117 GOTCP - Recorrido A">Linea 117 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 117 GOTCP - Recorrido B">Linea 117 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 117 GOTCP - Recorrido C">Linea 117 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 118 GOTCP - Recorrido A">Linea 118 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 118 GOTCP - Recorrido B">Linea 118 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 118 GOTCP - Recorrido C">Linea 118 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 119 GOTCP - Recorrido A">Linea 119 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 123 GOTCP - Recorrido A">Linea 123 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 124 GOTCP - Recorrido A">Linea 124 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 124 GOTCP - Recorrido B">Linea 124 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 126 GOTCP - Recorrido A">Linea 126 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 126 GOTCP - Recorrido B">Linea 126 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 126 GOTCP - Recorrido C">Linea 126 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 126 GOTCP - Recorrido D">Linea 126 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 126 GOTCP - Recorrido E">Linea 126 GOTCP - Recorrido E</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 126 GOTCP - Recorrido F">Linea 126 GOTCP - Recorrido F</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 128 GOTCP - Recorrido A">Linea 128 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 130 GOTCP - Recorrido A">Linea 130 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 130 GOTCP - Recorrido B">Linea 130 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 132 GOTCP - Recorrido A">Linea 132 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 132 GOTCP - Recorrido B">Linea 132 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 132 GOTCP - Recorrido C">Linea 132 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 133 GOTCP - Recorrido A">Linea 133 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 133 GOTCP - Recorrido B">Linea 133 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 133 GOTCP - Recorrido C">Linea 133 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 133 GOTCP - Recorrido D">Linea 133 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 134 GOTCP - Recorrido A">Linea 134 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 134 GOTCP - Recorrido B">Linea 134 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 135 GOTCP - Recorrido A">Linea 135 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 140 GOTCP - Recorrido A">Linea 140 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 140 GOTCP - Recorrido B">Linea 140 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 140 GOTCP - Recorrido C">Linea 140 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 140 GOTCP - Recorrido D">Linea 140 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 146 GOTCP - Recorrido A">Linea 146 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 146 GOTCP - Recorrido B">Linea 146 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 148 GOTCP - Recorrido A">Linea 148 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 148 GOTCP - Recorrido B">Linea 148 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 148 GOTCP - Recorrido C">Linea 148 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 148 GOTCP - Recorrido D">Linea 148 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 148 GOTCP - Recorrido E">Linea 148 GOTCP - Recorrido E</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 148 GOTCP - Recorrido F">Linea 148 GOTCP - Recorrido F</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 148 GOTCP - Recorrido G">Linea 148 GOTCP - Recorrido G</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 148 GOTCP - Recorrido H">Linea 148 GOTCP - Recorrido H</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 148 GOTCP - Recorrido I">Linea 148 GOTCP - Recorrido I</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 148 GOTCP - Recorrido J">Linea 148 GOTCP - Recorrido J</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 15 GOTCP - Recorrido A">Linea 15 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 15 GOTCP - Recorrido B">Linea 15 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 15 GOTCP - Recorrido C">Linea 15 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 15 GOTCP - Recorrido D">Linea 15 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 15 GOTCP - Recorrido E">Linea 15 GOTCP - Recorrido E</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 15 GOTCP - Recorrido F">Linea 15 GOTCP - Recorrido F</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 15 GOTCP - Recorrido G">Linea 15 GOTCP - Recorrido G</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 15 GOTCP - Recorrido H">Linea 15 GOTCP - Recorrido H</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 15 GOTCP - Recorrido I">Linea 15 GOTCP - Recorrido I</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 15 GOTCP - Recorrido J">Linea 15 GOTCP - Recorrido J</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 15 GOTCP - Recorrido K">Linea 15 GOTCP - Recorrido K</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 15 GOTCP - Recorrido L">Linea 15 GOTCP - Recorrido L</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 150 GOTCP - Recorrido A">Linea 150 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 150 GOTCP - Recorrido B">Linea 150 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 153 GOTCP - Recorrido A">Linea 153 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 154 GOTCP - Recorrido A">Linea 154 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 158 GOTCP - Recorrido A">Linea 158 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 159 GOTCP - Recorrido A">Linea 159 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 159 GOTCP - Recorrido B">Linea 159 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 159 GOTCP - Recorrido C">Linea 159 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 159 GOTCP - Recorrido D">Linea 159 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 159 GOTCP - Recorrido E">Linea 159 GOTCP - Recorrido E</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 159 GOTCP - Recorrido F">Linea 159 GOTCP - Recorrido F</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 159 GOTCP - Recorrido H">Linea 159 GOTCP - Recorrido H</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 159 GOTCP - Recorrido I">Linea 159 GOTCP - Recorrido I</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 159 GOTCP - Recorrido J">Linea 159 GOTCP - Recorrido J</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 159 GOTCP - Recorrido K">Linea 159 GOTCP - Recorrido K</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 160 GOTCP - Recorrido A">Linea 160 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 160 GOTCP - Recorrido B">Linea 160 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 160 GOTCP - Recorrido C">Linea 160 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 160 GOTCP - Recorrido D">Linea 160 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 160 GOTCP - Recorrido E">Linea 160 GOTCP - Recorrido E</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 160 GOTCP - Recorrido F">Linea 160 GOTCP - Recorrido F</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 160 GOTCP - Recorrido G">Linea 160 GOTCP - Recorrido G</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 160 GOTCP - Recorrido H">Linea 160 GOTCP - Recorrido H</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 160 GOTCP - Recorrido I">Linea 160 GOTCP - Recorrido I</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 160 GOTCP - Recorrido J">Linea 160 GOTCP - Recorrido J</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 160 GOTCP - Recorrido K">Linea 160 GOTCP - Recorrido K</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 160 GOTCP - Recorrido L">Linea 160 GOTCP - Recorrido L</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 160 GOTCP - Recorrido M">Linea 160 GOTCP - Recorrido M</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 160 GOTCP - Recorrido N">Linea 160 GOTCP - Recorrido N</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 161 GOTCP - Recorrido A">Linea 161 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 161 GOTCP - Recorrido B">Linea 161 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 163 GOTCP - Recorrido A">Linea 163 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 163 GOTCP - Recorrido B">Linea 163 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 163 GOTCP - Recorrido C">Linea 163 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 164 GOTCP - Recorrido A">Linea 164 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 164 GOTCP - Recorrido B">Linea 164 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 164 GOTCP - Recorrido C">Linea 164 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 164 GOTCP - Recorrido D">Linea 164 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 168 GOTCP - Recorrido A">Linea 168 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 168 GOTCP - Recorrido B">Linea 168 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 168 GOTCP - Recorrido C">Linea 168 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 168 GOTCP - Recorrido D">Linea 168 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 172 GOTCP - Recorrido A">Linea 172 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 172 GOTCP - Recorrido B">Linea 172 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 174 GOTCP - Recorrido A">Linea 174 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 174 GOTCP - Recorrido B">Linea 174 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 174 GOTCP - Recorrido C">Linea 174 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 176 GOTCP - Recorrido A">Linea 176 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 176 GOTCP - Recorrido B">Linea 176 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 176 GOTCP - Recorrido C">Linea 176 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 176 GOTCP - Recorrido D">Linea 176 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 176 GOTCP - Recorrido E">Linea 176 GOTCP - Recorrido E</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 176 GOTCP - Recorrido F">Linea 176 GOTCP - Recorrido F</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 176 GOTCP - Recorrido G">Linea 176 GOTCP - Recorrido G</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 176 GOTCP - Recorrido H">Linea 176 GOTCP - Recorrido H</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 176 GOTCP - Recorrido I">Linea 176 GOTCP - Recorrido I</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 176 GOTCP - Recorrido J">Linea 176 GOTCP - Recorrido J</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 176 GOTCP - Recorrido K">Linea 176 GOTCP - Recorrido K</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 176 GOTCP - Recorrido L">Linea 176 GOTCP - Recorrido L</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 176 GOTCP - Recorrido M">Linea 176 GOTCP - Recorrido M</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 176 GOTCP - Recorrido N">Linea 176 GOTCP - Recorrido N</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 176 GOTCP - Recorrido NN">Linea 176 GOTCP - Recorrido NN</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 178 GOTCP - Recorrido A">Linea 178 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 178 GOTCP - Recorrido B">Linea 178 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 178 GOTCP - Recorrido C">Linea 178 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 178 GOTCP - Recorrido D">Linea 178 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 178 GOTCP - Recorrido E">Linea 178 GOTCP - Recorrido E</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 179 GOTCP - Recorrido A">Linea 179 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 179 GOTCP - Recorrido B">Linea 179 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 179 GOTCP - Recorrido C">Linea 179 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 180 GOTCP - Recorrido A">Linea 180 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 180 GOTCP - Recorrido B">Linea 180 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 180 GOTCP - Recorrido C">Linea 180 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 180 GOTCP - Recorrido D">Linea 180 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 180 GOTCP - Recorrido E">Linea 180 GOTCP - Recorrido E</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 180 GOTCP - Recorrido F">Linea 180 GOTCP - Recorrido F</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 180 GOTCP - Recorrido G">Linea 180 GOTCP - Recorrido G</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 180 GOTCP - Recorrido H">Linea 180 GOTCP - Recorrido H</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 180 GOTCP - Recorrido I">Linea 180 GOTCP - Recorrido I</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 181 GOTCP - Recorrido A">Linea 181 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 181 GOTCP - Recorrido B">Linea 181 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 182 GOTCP - Recorrido A">Linea 182 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 182 GOTCP - Recorrido B">Linea 182 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 182 GOTCP - Recorrido C">Linea 182 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 182 GOTCP - Recorrido D">Linea 182 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 184 GOTCP - Recorrido A">Linea 184 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 185 GOTCP - Recorrido A">Linea 185 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 185 GOTCP - Recorrido B">Linea 185 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 185 GOTCP - Recorrido C">Linea 185 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 188 GOTCP - Recorrido A">Linea 188 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 188 GOTCP - Recorrido B">Linea 188 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 188 GOTCP - Recorrido C">Linea 188 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 188 GOTCP - Recorrido D">Linea 188 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 188 GOTCP - Recorrido E">Linea 188 GOTCP - Recorrido E</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 188 GOTCP - Recorrido F">Linea 188 GOTCP - Recorrido F</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 188 GOTCP - Recorrido G">Linea 188 GOTCP - Recorrido G</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 188 GOTCP - Recorrido H">Linea 188 GOTCP - Recorrido H</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 19 GOTCP - Recorrido A">Linea 19 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 2 GOTCP - Recorrido A">Linea 2 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 2 GOTCP - Recorrido B">Linea 2 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 20 GOTCP - Recorrido A">Linea 20 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 20 GOTCP - Recorrido B">Linea 20 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 21 GOTCP - Recorrido A">Linea 21 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 21 GOTCP - Recorrido B">Linea 21 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 21 GOTCP - Recorrido C">Linea 21 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 21 GOTCP - Recorrido D">Linea 21 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 21 GOTCP - Recorrido E">Linea 21 GOTCP - Recorrido E</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 21 GOTCP - Recorrido F">Linea 21 GOTCP - Recorrido F</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 21 GOTCP - Recorrido G">Linea 21 GOTCP - Recorrido G</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 21 GOTCP - Recorrido H">Linea 21 GOTCP - Recorrido H</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 21 GOTCP - Recorrido I">Linea 21 GOTCP - Recorrido I</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 21 GOTCP - Recorrido J">Linea 21 GOTCP - Recorrido J</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 21 GOTCP - Recorrido K">Linea 21 GOTCP - Recorrido K</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 22 GOTCP - Recorrido A">Linea 22 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 22 GOTCP - Recorrido B">Linea 22 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 23 GOTCP - Recorrido A">Linea 23 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 24 GOTCP - Recorrido A">Linea 24 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 24 GOTCP - Recorrido B">Linea 24 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 24 GOTCP - Recorrido C">Linea 24 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 25 GOTCP - Recorrido A">Linea 25 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 28 GOTCP - Recorrido A">Linea 28 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 28 GOTCP - Recorrido B">Linea 28 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 28 GOTCP - Recorrido C">Linea 28 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 28 GOTCP - Recorrido D">Linea 28 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 28 GOTCP - Recorrido E">Linea 28 GOTCP - Recorrido E</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 28 GOTCP - Recorrido F">Linea 28 GOTCP - Recorrido F</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 28 GOTCP - Recorrido G">Linea 28 GOTCP - Recorrido G</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 28 GOTCP - Recorrido H">Linea 28 GOTCP - Recorrido H</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 28 GOTCP - Recorrido I">Linea 28 GOTCP - Recorrido I</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 28 GOTCP - Recorrido J">Linea 28 GOTCP - Recorrido J</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 28 GOTCP - Recorrido K">Linea 28 GOTCP - Recorrido K</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 28 GOTCP - Recorrido L">Linea 28 GOTCP - Recorrido L</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 29 GOTCP - Recorrido A">Linea 29 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 29 GOTCP - Recorrido B">Linea 29 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 29 GOTCP - Recorrido C">Linea 29 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 29 GOTCP - Recorrido D">Linea 29 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 31 GOTCP - Recorrido A">Linea 31 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 31 GOTCP - Recorrido B">Linea 31 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 31 GOTCP - Recorrido C">Linea 31 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 31 GOTCP - Recorrido D">Linea 31 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 31 GOTCP - Recorrido E">Linea 31 GOTCP - Recorrido E</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 31 GOTCP - Recorrido F">Linea 31 GOTCP - Recorrido F</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 31 GOTCP - Recorrido G">Linea 31 GOTCP - Recorrido G</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 31 GOTCP - Recorrido H">Linea 31 GOTCP - Recorrido H</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 31 GOTCP - Recorrido I">Linea 31 GOTCP - Recorrido I</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 31 GOTCP - Recorrido J">Linea 31 GOTCP - Recorrido J</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 32 GOTCP - Recorrido A">Linea 32 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 33 GOTCP - Recorrido A">Linea 33 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 33 GOTCP - Recorrido B">Linea 33 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 33 GOTCP - Recorrido C">Linea 33 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 33 GOTCP - Recorrido D">Linea 33 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 33 GOTCP - Recorrido E">Linea 33 GOTCP - Recorrido E</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 33 GOTCP - Recorrido F">Linea 33 GOTCP - Recorrido F</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 33 GOTCP - Recorrido G">Linea 33 GOTCP - Recorrido G</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 33 GOTCP - Recorrido H">Linea 33 GOTCP - Recorrido H</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 33 GOTCP - Recorrido I">Linea 33 GOTCP - Recorrido I</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 37 GOTCP - Recorrido A">Linea 37 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 37 GOTCP - Recorrido B">Linea 37 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 37 GOTCP - Recorrido C">Linea 37 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 39 GOTCP - Recorrido A">Linea 39 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 39 GOTCP - Recorrido B">Linea 39 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 39 GOTCP - Recorrido C">Linea 39 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 39 GOTCP - Recorrido D">Linea 39 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 39 GOTCP - Recorrido E">Linea 39 GOTCP - Recorrido E</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 39 GOTCP - Recorrido F">Linea 39 GOTCP - Recorrido F</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 4 GOTCP - Recorrido A">Linea 4 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 4 GOTCP - Recorrido B">Linea 4 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 4 GOTCP - Recorrido C">Linea 4 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 41 GOTCP - Recorrido A">Linea 41 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 42 GOTCP - Recorrido A">Linea 42 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 42 GOTCP - Recorrido B">Linea 42 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 44 GOTCP - Recorrido A">Linea 44 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 45 GOTCP - Recorrido A">Linea 45 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 45 GOTCP - Recorrido B">Linea 45 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 45 GOTCP - Recorrido C">Linea 45 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 45 GOTCP - Recorrido D">Linea 45 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 46 GOTCP - Recorrido A">Linea 46 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 46 GOTCP - Recorrido B">Linea 46 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 46 GOTCP - Recorrido C">Linea 46 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 47 GOTCP - Recorrido A">Linea 47 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 47 GOTCP - Recorrido B">Linea 47 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 49 GOTCP - Recorrido A">Linea 49 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 49 GOTCP - Recorrido B">Linea 49 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 5 GOTCP - Recorrido A">Linea 5 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 5 GOTCP - Recorrido B">Linea 5 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 50 GOTCP - Recorrido A">Linea 50 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 50 GOTCP - Recorrido B">Linea 50 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 53 GOTCP - Recorrido A">Linea 53 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 53 GOTCP - Recorrido B">Linea 53 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 55 GOTCP - Recorrido A">Linea 55 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 55 GOTCP - Recorrido B">Linea 55 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 55 GOTCP - Recorrido C">Linea 55 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 56 GOTCP - Recorrido A">Linea 56 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 56 GOTCP - Recorrido B">Linea 56 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 56 GOTCP - Recorrido C">Linea 56 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 56 GOTCP - Recorrido D">Linea 56 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 59 GOTCP - Recorrido A">Linea 59 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 59 GOTCP - Recorrido B">Linea 59 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 59 GOTCP - Recorrido C">Linea 59 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 59 GOTCP - Recorrido D">Linea 59 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 6 GOTCP - Recorrido A">Linea 6 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 6 GOTCP - Recorrido B">Linea 6 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 6 GOTCP - Recorrido C">Linea 6 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 6 GOTCP - Recorrido D">Linea 6 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 63 GOTCP - Recorrido A">Linea 63 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 63 GOTCP - Recorrido B">Linea 63 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 64 GOTCP - Recorrido A">Linea 64 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 64 GOTCP - Recorrido B">Linea 64 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 64 GOTCP - Recorrido C">Linea 64 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 64 GOTCP - Recorrido D">Linea 64 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 65 GOTCP - Recorrido A">Linea 65 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 65 GOTCP - Recorrido B">Linea 65 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 67 GOTCP - Recorrido A">Linea 67 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 7 GOTCP - Recorrido A">Linea 7 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 7 GOTCP - Recorrido B">Linea 7 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 70 GOTCP - Recorrido A">Linea 70 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 70 GOTCP - Recorrido B">Linea 70 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 71 GOTCP - Recorrido A">Linea 71 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 71 GOTCP - Recorrido B">Linea 71 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 71 GOTCP - Recorrido C">Linea 71 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 75 GOTCP - Recorrido A">Linea 75 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 75 GOTCP - Recorrido B">Linea 75 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 76 GOTCP - Recorrido A">Linea 76 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 76 GOTCP - Recorrido B">Linea 76 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 8 GOTCP - Recorrido A">Linea 8 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 8 GOTCP - Recorrido B">Linea 8 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 8 GOTCP - Recorrido C">Linea 8 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 8 GOTCP - Recorrido D">Linea 8 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 8 GOTCP - Recorrido E">Linea 8 GOTCP - Recorrido E</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 80 GOTCP - Recorrido A">Linea 80 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 80 GOTCP - Recorrido B">Linea 80 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 80 GOTCP - Recorrido C">Linea 80 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 80 GOTCP - Recorrido D">Linea 80 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 80 GOTCP - Recorrido E">Linea 80 GOTCP - Recorrido E</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 84 GOTCP - Recorrido A">Linea 84 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 85 GOTCP - Recorrido A">Linea 85 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 85 GOTCP - Recorrido B">Linea 85 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 85 GOTCP - Recorrido C">Linea 85 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 85 GOTCP - Recorrido D">Linea 85 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 9 GOTCP - Recorrido A">Linea 9 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 9 GOTCP - Recorrido B">Linea 9 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 9 GOTCP - Recorrido C">Linea 9 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 90 GOTCP - Recorrido A">Linea 90 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 90 GOTCP - Recorrido B">Linea 90 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 91 GOTCP - Recorrido A">Linea 91 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 91 GOTCP - Recorrido B">Linea 91 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 91 GOTCP - Recorrido C">Linea 91 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 91 GOTCP - Recorrido D">Linea 91 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 91 GOTCP - Recorrido E">Linea 91 GOTCP - Recorrido E</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 91 GOTCP - Recorrido F">Linea 91 GOTCP - Recorrido F</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 92 GOTCP - Recorrido A">Linea 92 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 92 GOTCP - Recorrido B">Linea 92 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 92 GOTCP - Recorrido C">Linea 92 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 92 GOTCP - Recorrido D">Linea 92 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 93 GOTCP - Recorrido A">Linea 93 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 93 GOTCP - Recorrido B">Linea 93 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 93 GOTCP - Recorrido C">Linea 93 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 97 GOTCP - Recorrido A">Linea 97 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 97 GOTCP - Recorrido B">Linea 97 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 97 GOTCP - Recorrido C">Linea 97 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 98 GOTCP - Recorrido A">Linea 98 GOTCP - Recorrido A</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 98 GOTCP - Recorrido B">Linea 98 GOTCP - Recorrido B</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 98 GOTCP - Recorrido C">Linea 98 GOTCP - Recorrido C</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 98 GOTCP - Recorrido D">Linea 98 GOTCP - Recorrido D</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 98 GOTCP - Recorrido E">Linea 98 GOTCP - Recorrido E</option>';
+            FILTRO_GOTCP_options_str  += '<option value="Linea 98 GOTCP - Recorrido F">Linea 98 GOTCP - Recorrido F</option>';
+            sel_FILTRO_GOTCP.innerHTML = FILTRO_GOTCP_options_str;
+            div_FILTRO_GOTCP.appendChild(sel_FILTRO_GOTCP);
+            var lab_FILTRO_GOTCP = document.createElement('div');
+            lab_FILTRO_GOTCP.innerHTML = 'FILTRO_GOTCP';
+            lab_FILTRO_GOTCP.className = 'filterlabel';
+            div_FILTRO_GOTCP.appendChild(lab_FILTRO_GOTCP);
+            var reset_FILTRO_GOTCP = document.createElement('div');
+            reset_FILTRO_GOTCP.innerHTML = 'clear filter';
+            reset_FILTRO_GOTCP.className = 'filterlabel';
+            reset_FILTRO_GOTCP.onclick = function() {
+                var options = document.getElementById("sel_FILTRO_GOTCP").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_FILTRO_GOTCP.appendChild(reset_FILTRO_GOTCP);
+        </script>
+    </body>
+</html>
